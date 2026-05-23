@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: ./backend-dotnet
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    container_name: taskflow-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - taskflow-network
+
+  worker:
+    build:
+      context: ./worker-python
+      dockerfile: Dockerfile
+    container_name: taskflow-worker
+    depends_on:
+      - backend
+    networks:
+      - taskflow-network
+
+  frontend:
+    build:
+      context: ./frontend-js
+      dockerfile: Dockerfile
+    container_name: taskflow-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - taskflow-network
+
+networks:
+  taskflow-network:
+    driver: bridge

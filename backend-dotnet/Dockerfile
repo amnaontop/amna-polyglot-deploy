@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-stage
+WORKDIR /app
+COPY src/*.csproj ./src/
+RUN dotnet restore ./src/
+COPY src/ ./src/
+RUN dotnet publish ./src/ -c Release -o /app/published
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final-stage
+WORKDIR /app
+COPY --from=build-stage /app/published .
+ENV ASPNETCORE_URLS=http://+:5000
+EXPOSE 5000
+ENTRYPOINT ["dotnet", "TaskFlowApi.dll"]

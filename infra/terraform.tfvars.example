@@ -1,0 +1,6 @@
+location            = "centralindia"
+project_name        = "polyglot"
+vm_size             = ""
+admin_username      = "azureuser"
+ssh_public_key_path = "~/.ssh/polyglot-key.pub"
+allowed_ssh_ip      = "YOUR_IP_HERE"

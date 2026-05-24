@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    image: amna-polyglot-deploy-backend:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - taskflow-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: amna-polyglot-deploy-worker:latest
+    networks:
+      - taskflow-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  frontend:
+    image: amna-polyglot-deploy-frontend:latest
+    ports:
+      - "3000:80"
+    networks:
+      - taskflow-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  taskflow-network:
+    driver: overlay

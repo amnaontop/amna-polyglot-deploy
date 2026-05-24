@@ -1,106 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TaskFlow — React</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-      /* keep minimal styling from original for familiarity */
-      body { font-family: 'DM Sans', sans-serif; background:#f8fafc; color:#0f172a; margin:0; }
-      .container { max-width:1100px;margin:24px auto;padding:16px; }
-      .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px }
-      .title { font-size:20px; font-weight:600 }
-      .card { background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:12px }
-      .row { display:flex; gap:12px }
-      .tasks { margin-top:12px }
-      .task { padding:10px;border-bottom:1px solid #f1f5f9 }
-      .badge { padding:4px 8px;border-radius:12px;font-size:12px }
-    </style>
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <div id="root"></div>
 
-    <!-- React + Babel (browser transpile). This is okay for demos, not for production builds -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
-    <script type="text/babel">
-      const API = `http://${window.location.hostname}:5000`;
-
-      function Badge({text, type='pending'}){
-        const map = { done:'green', running:'blue', pending:'orange', failed:'red' };
-        const color = map[type]||'gray';
-        return <span className="badge" style={{background: color==='green'? '#f0fdf4': color==='blue'?'#eff6ff': '#fffbeb', color: color==='green'? '#16a34a' : color==='blue'?'#2563eb':'#d97706'}}>{text}</span>
-      }
-
-      function App(){
-        const [status, setStatus] = React.useState(null);
-        const [tasks, setTasks] = React.useState([]);
-        const [error, setError] = React.useState(false);
-        const [newTask, setNewTask] = React.useState('');
-
-        React.useEffect(()=>{ loadStatus(); loadTasks(); const id = setInterval(()=>{loadStatus();loadTasks();},30000); return ()=>clearInterval(id); },[]);
-
-        function loadStatus(){
-          fetch(`${API}/api/status`).then(r=>r.json()).then(d=>{ setStatus(d); setError(false); }).catch(()=>setError(true));
-        }
-
-        function loadTasks(){
-          fetch(`${API}/api/tasks`).then(r=>r.json()).then(d=>setTasks(d)).catch(()=>setTasks([]));
-        }
-
-        function addTask(){
-          if(!newTask.trim()) return; 
-          fetch(`${API}/api/tasks`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:newTask,status:'pending'})})
-            .then(r=>r.json()).then(()=>{ setNewTask(''); loadTasks(); }).catch(()=>{ setTasks(t=>[...t,{id:t.length+1,title:newTask,status:'pending'}]); setNewTask(''); });
-        }
-
-        return (
-          <div className="container">
-            <div className="top">
-              <div className="title">TaskFlow — React</div>
-              <div>{status? status.version : (error? 'API Offline' : 'Connecting...')}</div>
-            </div>
-
-            <div className="row">
-              <div style={{flex:1}}>
-                <div className="card">
-                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                    <strong>Tasks</strong>
-                    <Badge text={`${tasks.length} items`} type={tasks.length? 'done':'pending'} />
-                  </div>
-                  <div className="tasks">
-                    {tasks.length? tasks.map(t=> <div key={t.id} className="task">#{t.id} {t.title} <Badge text={t.status} type={t.status} /></div>) : <div style={{padding:12,color:'#94a3b8'}}>No tasks yet</div>}
-                  </div>
-                  <div style={{display:'flex',gap:8,marginTop:10}}>
-                    <input value={newTask} onChange={e=>setNewTask(e.target.value)} placeholder="Add a task" style={{flex:1,padding:8}} />
-                    <button onClick={addTask} style={{padding:'8px 12px'}}>Add</button>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{width:320}}>
-                <div className="card">
-                  <strong>API Status</strong>
-                  <div style={{marginTop:8}}>
-                    {error? <div style={{color:'#dc2626'}}>Offline</div> : status? <div><div>{status.message}</div><div style={{fontSize:12,color:'#94a3b8'}}>{status.version} — {new Date(status.timestamp).toLocaleString()}</div></div> : 'Loading...'}
-                  </div>
-                </div>
-                <div className="card" style={{marginTop:12}}>
-                  <strong>Services</strong>
-                  <div style={{marginTop:8}}><div style={{display:'flex',justifyContent:'space-between'}}><span>.NET API</span><Badge text={error? 'Offline' : 'Healthy'} type={error? 'failed':'done'} /></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      }
-
-      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-    </script>
+    <script type="text/babel" src="./App.jsx"></script>
   </body>
-</html>
-</body>
 </html>

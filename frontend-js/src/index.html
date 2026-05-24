@@ -284,7 +284,7 @@
 
 <script>
   // ── CONFIG — production mein VM IP yahan dalna ──
-  const API = "http://taskflow-backend:5000";
+  const API = `http://${window.location.hostname}:5000`;
 
   function showToast(msg) {
     const t = document.getElementById("toast");

@@ -53,12 +53,7 @@ jobs:
           npm install
           npm test -- --watchAll=false --passWithNoTests || echo "No tests found, skipping"
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
+    
       - name: Build and Push Backend
         uses: docker/build-push-action@v5
         with:

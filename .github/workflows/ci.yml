@@ -53,14 +53,20 @@ jobs:
           npm install
           npm test -- --watchAll=false --passWithNoTests || echo "No tests found, skipping"
 
-    
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and Push Backend
         uses: docker/build-push-action@v5
         with:
           context: ./backend-dotnet
           file: ./backend-dotnet/Dockerfile
           push: true
-          tags: amnaa1234/polyglot-backend:latest
+          tags: ghcr.io/amnaontop/polyglot-backend:latest
 
       - name: Build and Push Worker
         uses: docker/build-push-action@v5
@@ -68,7 +74,7 @@ jobs:
           context: ./worker-python
           file: ./worker-python/Dockerfile
           push: true
-          tags: amnaa1234/polyglot-worker:latest
+          tags: ghcr.io/amnaontop/polyglot-worker:latest
 
       - name: Build and Push Frontend
         uses: docker/build-push-action@v5
@@ -76,8 +82,4 @@ jobs:
           context: ./frontend-js
           file: ./frontend-js/Dockerfile
           push: true
-          tags: amnaa1234/polyglot-frontend:latest
-
-      - name: Login to Docker Hub
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin registry-1.docker.io
+          tags: ghcr.io/amnaontop/polyglot-frontend:latest

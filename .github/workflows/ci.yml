@@ -77,3 +77,7 @@ jobs:
           file: ./frontend-js/Dockerfile
           push: true
           tags: amnaa1234/polyglot-frontend:latest
+
+      - name: Login to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin registry-1.docker.io

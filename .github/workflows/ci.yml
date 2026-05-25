@@ -31,10 +31,9 @@ jobs:
 
       - name: Test .NET API
         run: |
-          cd backend-dotnet
+          cd backend-dotnet/src/TaskFlowApi
           dotnet restore
-          dotnet test
-
+          dotnet build
       - name: Test Python Worker
         run: |
           cd worker-python

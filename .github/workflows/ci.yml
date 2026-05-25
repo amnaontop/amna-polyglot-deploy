@@ -5,15 +5,13 @@ on:
     branches: [ main, feature/* ]
   pull_request:
     branches: [ main ]
+
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-jobs:
-  test-and-build:
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code

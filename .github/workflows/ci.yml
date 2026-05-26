@@ -86,3 +86,12 @@ jobs:
           file: ./frontend-js/Dockerfile
           push: true
           tags: ghcr.io/amnaontop/polyglot-frontend:latest
+          trigger-jenkins:
+     needs: [build]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Trigger Jenkins
+        run: |
+          curl -X POST \
+            "http://3.227.230.183:8080/job/polyglot-pipleline/build?token=polyglot-token-123"

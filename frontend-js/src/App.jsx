@@ -141,10 +141,10 @@ function App() {
   const milestones = useMemo(() => {
     const items = [
       { id: 1, title: 'Dockerization', sub: 'Milestone 1', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
-      { id: 2, title: 'Terraform Infrastructure', sub: 'Milestone 2', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
-      { id: 3, title: 'GitHub Actions CI', sub: 'Milestone 3', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
-      { id: 4, title: 'Jenkins CD', sub: 'Milestone 4', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
-     { id: 5, title: 'Final Demo', sub: 'Milestone 5', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
+      { id: 2, title: 'Terraform Infrastructure', sub: 'Milestone 2', statusLabel: 'Completed', statusClass: 'completed', icon: '✅' },
+      { id: 3, title: 'GitHub Actions CI', sub: 'Milestone 3', statusLabel: 'Completed', statusClass: 'completed', icon: '✅' },
+      { id: 4, title: 'Jenkins CD', sub: 'Milestone 4', statusLabel: 'Completed', statusClass: 'completed', icon: '✅' },
+     { id: 5, title: 'Final Demo', sub: 'Milestone 5', statusLabel: 'Completed', statusClass: 'completed', icon: '✅' },
     ];
     const completed = items.filter(item => item.statusLabel === 'Complete').length;
     return { items, completed, total: items.length, percent: Math.round((completed / items.length) * 100) };

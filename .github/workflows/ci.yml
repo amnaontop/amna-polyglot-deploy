@@ -81,4 +81,4 @@ jobs:
       - name: Trigger Jenkins
         run: |
           curl -X POST \
-            "http://3.227.230.183:8080/job/polyglot-pipleline/build?token=polyglot-token-123"
+           "http://3.227.230.183:8080/job/polyglot-pipleline/build?token=polyglot+token+123"

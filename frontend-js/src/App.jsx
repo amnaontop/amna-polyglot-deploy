@@ -144,7 +144,7 @@ function App() {
       { id: 2, title: 'Terraform Infrastructure', sub: 'Milestone 2', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
       { id: 3, title: 'GitHub Actions CI', sub: 'Milestone 3', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
       { id: 4, title: 'Jenkins CD', sub: 'Milestone 4', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
-      { id: 5, title: 'Final Demo', sub: 'Milestone 5', statusLabel: 'In Progress', statusClass: 'current', icon: '🔄' },
+     { id: 5, title: 'Final Demo', sub: 'Milestone 5', statusLabel: 'Complete', statusClass: 'completed', icon: '✅' },
     ];
     const completed = items.filter(item => item.statusLabel === 'Complete').length;
     return { items, completed, total: items.length, percent: Math.round((completed / items.length) * 100) };
